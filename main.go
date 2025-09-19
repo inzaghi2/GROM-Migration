@@ -28,5 +28,19 @@ func main() {
 // migrasi database
 func Migrate() {
 	DB.AutoMigrate(&models.User{})
+	data := models.User{}
+	if DB.Find(&data).RecordNotFound() {
+		fmt.Println("seeding data...")
+		SeederUser()
+	}
+}
+func SeederUser() {
+	data := models.User{
+		ID:       1,
+		Name:     "zaghi",
+		Email:    "zaghi@gmail.com",
+		Password: "123456",
+	}
+	DB.Create(&data)
 
 }
